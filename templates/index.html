@@ -1,0 +1,167 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BrainMaster</title>
+    <link rel="stylesheet" href="/static/css/global.css">
+</head>
+
+<script src="/static/jquery/jquery.min.js"></script>
+
+<body>
+    <div class="main">
+        <div class="top-bar dragable">
+            <div class="left-panel">
+                <img src="/static/img/icon.png" class="logo dragable">
+                <div class="menu">
+                    <div class="item">File
+                        <div class="menu-item">
+                            <div class="section">
+                                <div class="item"><div class="text">New Text File</div><div class="shortcut">Ctrl+N</div></div>
+                                <div class="item"><div class="text">New Window</div><div class="shortcut">Ctrl+Shift+N</div></div>
+                            </div>
+                            <div class="section">
+                                <div class="item"><div class="text">Open File...</div><div class="shortcut">Ctrl+O</div></div>
+                                <div class="item"><div class="text">Recently Opened</div></div>
+                            </div>
+                            <div class="section">
+                                <div class="item"><div class="text">Save</div><div class="shortcut">Ctrl+S</div></div>
+                                <div class="item"><div class="text">Save As...</div><div class="shortcut">Ctrl+Shift+S</div></div>
+                            </div>
+                            <div class="section">
+                                <div class="item"><div class="text">Exit</div></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="item">Run
+                        <div class="menu-item">
+                            <div class="item"><div class="text">Start Debugging</div><div class="shortcut">F5</div></div>
+                            <div class="item"><div class="text">Run Only</div><div class="shortcut">Ctrl+F5</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="title-panel dragable"><div class="title dragable">
+                MindMaster
+            </div></div>
+            <div class="right-panel">
+                <div class="window-control">
+                    <div class="close-btn btn" id="close_btn">
+                        <img src="/static/img/close.svg">
+                    </div>
+                    <div class="maximize-btn btn" id="maximize_btn" style="display: {% if maximize %}flex{% else %}none{% endif %}">
+                        <img src="/static/img/maximize.svg">
+                    </div>
+                    <div class="restore-down-btn btn" id="restore-down_btn" style="display: {% if maximize %}none{% else %}flex{% endif %}">
+                        <img src="/static/img/restore-down.svg">
+                    </div>
+                    <div class="minimize-btn btn" id="minimize_btn">
+                        <img src="/static/img/minimize.svg">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="tab-bar">
+            
+        </div>
+    </div>
+</body>
+
+<script>
+    let _ignore_click = false
+    let _menu_clicked = false
+    let _move_window = false
+
+    let close_program = ()=>{
+        $.get("/close")
+    }
+
+    let maximize_program = ()=>{
+        $.get("/maximize")
+        $("#maximize_btn").css("display", "none")
+        $("#restore-down_btn").css("display", "flex")
+    }
+
+    let restore_down_program = ()=>{
+        $.get("/restore-down")
+        $("#maximize_btn").css("display", "flex")
+        $("#restore-down_btn").css("display", "none")
+    }
+
+    let move_program = ()=>{
+        _move_window = true
+        $.get("/move")
+    }
+
+    let unmove_program = ()=>{
+        _move_window = false
+        $.get("/unmove")
+    }
+
+    let show_program = ()=>{
+        $.get("/show")
+    }
+
+    let minimize_program = ()=>{
+        $.get("/minimize")
+    }
+
+    $("#close_btn").click(()=>{
+        close_program()
+    })
+
+    $("#maximize_btn").click(()=>{
+        maximize_program()
+    })
+
+    $("#restore-down_btn").click(()=>{
+        restore_down_program()
+    })
+
+    $("#minimize_btn").click(()=>{
+        minimize_program()
+    })
+
+    $("body").ready(()=>{
+        show_program()
+    })
+
+    let close_topbar_menu = ()=>{
+        $(".menu .item")
+            .removeClass("clicked")
+            .children(".menu-item").css("display", "none");
+        _menu_clicked = false;
+    }
+
+    $(".menu .item").click((event)=>{
+        close_topbar_menu()
+        _ignore_click = true
+        _menu_clicked = true
+        $(event.currentTarget)
+            .addClass("clicked")
+            .children(".menu-item").css("display", "flex")
+    }).hover((event)=>{
+        if(!$(event.currentTarget).hasClass("clicked") && _menu_clicked){
+            close_topbar_menu()
+            $(event.currentTarget).click()
+        }
+    })
+
+    $(document).click(()=>{
+        if(!_ignore_click){
+            close_topbar_menu()
+        }
+        _ignore_click = false
+    }).mouseup((event)=>{
+        if(event.which === 1 && _move_window){
+            unmove_program()
+        }
+    }).mousedown((event)=>{
+        if(event.which === 1 && $(event.target).hasClass("dragable")){
+            move_program()
+        }
+    })
+</script>
+
+</html>
