@@ -63,6 +63,10 @@
             </div>
         </div>
         <div class="tab-bar">
+            <div class="tab">
+                <img src="/static/img/bf-logo.png" class="img">
+                <div class="title">hello world.bf</div>
+            </div>
             
         </div>
     </div>
@@ -77,16 +81,24 @@
         $.get("/close")
     }
 
-    let maximize_program = ()=>{
-        $.get("/maximize")
+    let _maximize_window = ()=>{
         $("#maximize_btn").css("display", "none")
         $("#restore-down_btn").css("display", "flex")
     }
 
-    let restore_down_program = ()=>{
-        $.get("/restore-down")
+    let _minimize_window = ()=>{
         $("#maximize_btn").css("display", "flex")
         $("#restore-down_btn").css("display", "none")
+    }
+
+    let maximize_program = ()=>{
+        $.get("/maximize")
+        _maximize_window()
+    }
+
+    let restore_down_program = ()=>{
+        $.get("/restore-down")
+        _minimize_window()
     }
 
     let move_program = ()=>{

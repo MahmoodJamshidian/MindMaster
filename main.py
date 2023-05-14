@@ -1,10 +1,10 @@
+from PyQt5 import QtCore
 from flask import Flask, render_template, request
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtWebEngineWidgets import *
 from PyQt5.QtPrintSupport import *
-from threading import Thread
 from pyqt_frameless_window import FramelessMainWindow
 from pynput.mouse import Button, Controller
 import qdarkstyle
@@ -104,13 +104,20 @@ class MainWindow(FramelessMainWindow):
         self.window_movement.start()
 
     def closeEvent(self, event):
-        reply = QMessageBox.question(self, 'Message',
+        reply = QMessageBox.question(self, 'MindMaster',
             "Are you sure to quit?", QMessageBox.Yes, QMessageBox.No)
 
         if reply == QMessageBox.Yes:
             event.accept()
         else:
             event.ignore()
+
+    def changeEvent(self, event: QEvent):
+        if event.type() == QEvent.WindowStateChange and self.windowState() == Qt.WindowMaximized:
+            self.browser.page().runJavaScript("_maximize_window()")
+        if event.type() == QEvent.WindowStateChange and self.windowState() == Qt.WindowNoState:
+            self.browser.page().runJavaScript("_minimize_window()")
+        return super().changeEvent(event)
     
 QApplication.setApplicationName("MindMaster")
  

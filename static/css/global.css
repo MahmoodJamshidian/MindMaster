@@ -4,6 +4,10 @@
     --t3: #dddddd;
     --t4: #252526;
     --t5: #707070;
+    --t6: #252526;
+    --t7: #2D2D2D;
+    --t8: #1E1E1E;
+    --t9: #ffffff;
 }
 
 @font-face {
@@ -34,6 +38,7 @@
     background-color: #3C3C3C;
     display: flex;
     align-items: stretch;
+    z-index: 1;
 }
 
 .top-bar *{
@@ -126,7 +131,6 @@
     margin-top: 5px;
     left: 0; 
     border-radius: 5px;
-    /* display: flex; */
     flex-direction: column;
     justify-content: stretch;
     width: max-content;
@@ -224,4 +228,41 @@ img {
     -moz-user-drag: none;
     -o-user-drag: none;
     user-drag: none;
+}
+
+.tab-bar{
+    background-color: var(--t6);
+    position: relative;
+    display: flex;
+    overflow-x: auto;
+}
+
+.tab-bar .tab{
+    height: 40px;
+    background-color: var(--t7);
+    padding: 0 10px;
+    width: fit-content;
+    min-width: max-content;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tab-bar .tab .img{
+    height: auto;
+    width: 15px;
+}
+
+.tab-bar .tab .title{
+    margin-left: 5px;
+    font-size: 12px;
+    color: var(--t1);
+}
+
+.tab-bar .tab.selected{
+    background-color: var(--t8);
+}
+
+.tab-bar .tab.selected .title{
+    color: var(--t9);
 }
