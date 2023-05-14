@@ -16,6 +16,11 @@
 }
 
 @font-face {
+    font-family: CascadiaCode;
+    src: url(/static/font/CascadiaCode.ttf);
+}
+
+@font-face {
     font-family: Roboto-Regular;
     src: url(/static/font/Roboto-Regular.ttf);
 }
@@ -25,9 +30,14 @@
     padding: 0;
     font-family: Roboto-Regular;
     user-select: none;
+    z-index: 0;
 }
 .main{
     width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
 }
 
 .main >*{
@@ -39,7 +49,7 @@
     background-color: #3C3C3C;
     display: flex;
     align-items: stretch;
-    z-index: 1;
+    z-index: 9;
 }
 
 .top-bar *{
@@ -253,6 +263,9 @@ img {
     position: relative;
     display: flex;
     overflow-x: auto;
+    overflow-y: hidden;
+    box-shadow: 0px 1px 4px black;
+    z-index: 2;
 }
 
 .tab-bar .tab{
@@ -283,4 +296,70 @@ img {
 
 .tab-bar .tab.selected .title{
     color: var(--t9);
+}
+
+.editor{
+    background-color: #1E1E1E;
+    position: relative;
+    height: 100%;
+    z-index: 1;
+    padding-top: 5px;
+}
+
+.editor .window{
+    width: 100%;
+    height: max-content;
+    position: relative;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
+.editor .window .numbers{
+    padding: 0px 10px 0px 15px;
+    margin-top: -1px;
+}
+
+.editor .window .numbers .line, .editor .window .code .line{
+    margin: 2px 0px;
+}
+
+.editor .window .numbers .line{
+    color: var(--t5);
+    font-family: CascadiaCode;
+    font-size: 14px;
+    padding: 2px 0px;
+    direction: rtl;
+}
+
+.editor .window .numbers .line.selected{
+    color: var(--t9);
+}
+
+.editor .window .code{
+    height: 100%;
+    width: 100%;
+}
+
+.editor .window .code .line{
+    font-family: CascadiaCode;
+    display: block;
+    border: none;
+    color: white;
+    background-color: #00000000;
+    overflow: auto;
+    outline: none;
+    font-size: 15px;
+    min-width: 100%;
+    overflow-x: visible;
+    width: max-content;
+    -webkit-appearance: none;
+    appearance: none;
+    height: 22px;
+    margin: 0;
+}
+
+.editor .window .code .line.selected{
+    border-top: 1px solid var(--t2);
+    border-bottom: 1px solid var(--t2);
 }
