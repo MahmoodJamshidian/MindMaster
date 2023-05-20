@@ -1,4 +1,4 @@
-from PyQt5 import QtCore
+from PyQt5 import QtCore, QtGui
 from flask import Flask, render_template, request
 from PyQt5.QtCore import *
 from PyQt5.QtWidgets import *
@@ -8,7 +8,28 @@ from PyQt5.QtPrintSupport import *
 from pyqt_frameless_window import FramelessMainWindow
 from pynput.mouse import Button, Controller
 import qdarkstyle
+import os.path
 import sys
+
+MIN_WINDOW_SIZE = (750, 500)
+
+class Tab: ...
+
+tabs: list[Tab] = []
+
+class Tab:
+    def __init__(self, title):
+        self.title = title
+        self.data = ""
+        tabs.append(self)
+    
+    @staticmethod
+    def load_file(filepath: str):
+        with open(filepath, "r") as file:
+            tab = Tab(os.path.split(filepath)[-1])
+            tab.data = file.read()
+            return tab
+    
 
 class WindowMovement(QThread):
     _move = pyqtSignal(int, int)
@@ -118,6 +139,13 @@ class MainWindow(FramelessMainWindow):
         if event.type() == QEvent.WindowStateChange and self.windowState() == Qt.WindowNoState:
             self.browser.page().runJavaScript("_minimize_window()")
         return super().changeEvent(event)
+    
+    def resizeEvent(self, event: QResizeEvent) -> None:
+        size = event.size()
+        if size.width() < MIN_WINDOW_SIZE[0] or size.height() < MIN_WINDOW_SIZE[1]:
+            event.ignore()
+        else:
+            event.accept()
     
 QApplication.setApplicationName("MindMaster")
  

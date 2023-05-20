@@ -8,6 +8,7 @@
 </head>
 
 <script src="/static/jquery/jquery.min.js"></script>
+<script src="/static/js/global.js"></script>
 
 <body>
     <div class="main">
@@ -105,6 +106,13 @@
                 </div>
             </div>
         </div>
+        <div class="home-page">
+            <div class="dialog">
+                <img src="/static/img/icon.png">
+                <h1>MindMaster</h1>
+                <a href="#" id="create_tab">create new file</a>
+            </div>
+        </div>
     </div>
 </body>
 
@@ -172,6 +180,7 @@
     })
 
     $("body").ready(()=>{
+        load_home_page()
         show_program()
     })
 
@@ -208,6 +217,52 @@
     }).mousedown((event)=>{
         if(event.which === 1 && $(event.target).hasClass("dragable")){
             move_program()
+        }
+    })
+
+    $("#create_tab").click(()=>{
+        create_tab("untitled.bf")
+        load_editor_page()
+    })
+
+    $(".tab").click((event)=>{
+    })
+
+    $(".editor .window .code input.line").click((event)=>{
+        deselect_all_lines()
+        select_line(_lines().index($(event.currentTarget)))
+    }).on("keydown", (e)=>{
+        var this_line = $(e.currentTarget)
+        if (e.keyCode === 9) {
+            e.preventDefault();
+            let cursorPos = this_line.prop("selectionStart")
+            console.log(cursorPos)
+            let v = this_line.val()
+            let textBeforeCursor = v.substring(0, cursorPos)
+            let textAfterCursor = v.substring(cursorPos, v.length)
+            let spacesToAdd = "    "
+            let newText = textBeforeCursor + spacesToAdd + textAfterCursor
+            this_line.val(newText)
+            this_line.prop("selectionStart", cursorPos + spacesToAdd.length)
+            this_line.prop("selectionEnd", cursorPos + spacesToAdd.length)
+        }else if(e.keyCode === 8){
+            let cursorPos = this_line.prop("selectionStart")
+            let line_index = _lines().index(this_line)
+            console.log(this_line)
+            if (cursorPos === this_line.prop("selectionEnd") && cursorPos === 0 && _lines().index(this_line) > 0){
+                e.preventDefault();
+                let line_data = this_line.val()
+                let prev_line_index = _lines().index(this_line)-1
+                let prev_line = $(_lines()[prev_line_index])
+                remove_line(prev_line_index+1)
+                select_line(prev_line_index)
+                let prev_line_data = prev_line.val()
+                prev_line.val(prev_line_data + line_data)
+                console.log(prev_line_data.length)
+                prev_line.prop("selectionStart", prev_line_data.length)
+                prev_line.prop("selectionEnd", prev_line_data.length)
+                prev_line.focus();
+            }
         }
     })
 </script>

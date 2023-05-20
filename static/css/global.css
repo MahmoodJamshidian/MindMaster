@@ -32,6 +32,15 @@
     user-select: none;
     z-index: 0;
 }
+
+a{
+    color: #4c8cf3;
+}
+
+a:focus{
+    color: #3f74ca;
+}
+
 .main{
     width: 100%;
     height: 100%;
@@ -298,12 +307,33 @@ img {
     color: var(--t9);
 }
 
-.editor{
+.editor, .home-page{
     background-color: #1E1E1E;
     position: relative;
     height: 100%;
     z-index: 1;
     padding-top: 5px;
+}
+
+.home-page{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.home-page .dialog{
+    margin-top: -200px;
+    width: 300px;
+    text-align: center;
+}
+
+.home-page .dialog img{
+    width: 55%;
+}
+
+.home-page .dialog h1{
+    color: var(--t9);
 }
 
 .editor .window{
