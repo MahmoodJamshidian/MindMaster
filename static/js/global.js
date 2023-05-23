@@ -24,11 +24,11 @@ function create_tab(title, logo="/static/img/bf-logo.png"){
 }
 
 var _lines = ()=>{
-    return $(".editor .window .code input.line")
+    return $(".editor .window .code .line")
 }
 
 var _nums = ()=>{
-    return $(".editor .window .numbers div.line")
+    return $(".editor .window .numbers .line")
 }
 
 function select_line(line_index){
@@ -36,8 +36,6 @@ function select_line(line_index){
     let nums = _nums()
     let line = $(lines.get(line_index))
     let num = $(nums.get(line_index))
-    console.log(line)
-    console.log(num)
     line.addClass("selected")
     num.addClass("selected")
 }
@@ -64,3 +62,15 @@ function remove_line(line_index){
     $(lines.get(line_index)).remove()
     $(nums.get(line_index)).remove()
 }
+
+var _cursor_status = 0
+
+setInterval(()=>{
+    if (_cursor_status){
+        $(".cursor").css("background-color", "var(--t3)")
+        _cursor_status = 0
+    }else{
+        $(".cursor").css("background-color", "#fff0")
+        _cursor_status = 1
+    }
+}, 500)

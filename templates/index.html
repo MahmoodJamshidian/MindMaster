@@ -88,21 +88,103 @@
                     <div class="line">11</div>
                     <div class="line">12</div>
                     <div class="line">13</div>
+                    <div class="line">14</div>
+                    <div class="line">15</div>
+                    <div class="line">16</div>
+                    <div class="line">17</div>
+                    <div class="line">18</div>
+                    <div class="line">19</div>
+                    <div class="line">20</div>
+                    <div class="line">21</div>
+                    <div class="line">22</div>
+                    <div class="line">23</div>
+                    <div class="line">24</div>
+                    <div class="line">25</div>
+                    <div class="line">26</div>
+                    <div class="line">27</div>
                 </div>
                 <div class="code">
-                    <input type="text" class="line">
-                    <input type="text" class="line selected">
-                    <input type="text" class="line">
-                    <input type="text" class="line">
-                    <input type="text" class="line">
-                    <input type="text" class="line">
-                    <input type="text" class="line">
-                    <input type="text" class="line">
-                    <input type="text" class="line">
-                    <input type="text" class="line">
-                    <input type="text" class="line">
-                    <input type="text" class="line">
-                    <input type="text" class="line">
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line selected">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
+                    <div class="line">
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                    </div>
                 </div>
             </div>
         </div>
@@ -180,7 +262,8 @@
     })
 
     $("body").ready(()=>{
-        load_home_page()
+        // load_home_page()
+        load_editor_page()
         show_program()
     })
 
@@ -228,41 +311,16 @@
     $(".tab").click((event)=>{
     })
 
-    $(".editor .window .code input.line").click((event)=>{
-        deselect_all_lines()
-        select_line(_lines().index($(event.currentTarget)))
-    }).on("keydown", (e)=>{
-        var this_line = $(e.currentTarget)
-        if (e.keyCode === 9) {
-            e.preventDefault();
-            let cursorPos = this_line.prop("selectionStart")
-            console.log(cursorPos)
-            let v = this_line.val()
-            let textBeforeCursor = v.substring(0, cursorPos)
-            let textAfterCursor = v.substring(cursorPos, v.length)
-            let spacesToAdd = "    "
-            let newText = textBeforeCursor + spacesToAdd + textAfterCursor
-            this_line.val(newText)
-            this_line.prop("selectionStart", cursorPos + spacesToAdd.length)
-            this_line.prop("selectionEnd", cursorPos + spacesToAdd.length)
-        }else if(e.keyCode === 8){
-            let cursorPos = this_line.prop("selectionStart")
-            let line_index = _lines().index(this_line)
-            console.log(this_line)
-            if (cursorPos === this_line.prop("selectionEnd") && cursorPos === 0 && _lines().index(this_line) > 0){
-                e.preventDefault();
-                let line_data = this_line.val()
-                let prev_line_index = _lines().index(this_line)-1
-                let prev_line = $(_lines()[prev_line_index])
-                remove_line(prev_line_index+1)
-                select_line(prev_line_index)
-                let prev_line_data = prev_line.val()
-                prev_line.val(prev_line_data + line_data)
-                console.log(prev_line_data.length)
-                prev_line.prop("selectionStart", prev_line_data.length)
-                prev_line.prop("selectionEnd", prev_line_data.length)
-                prev_line.focus();
-            }
+    $(".editor .window .code .line").mousedown((event)=>{
+        // deselect_all_lines()
+        let currentTarget = $(event.currentTarget)
+        let target = $(event.target)
+        let cursor = $('<div class="cursor"></div>')
+        select_line(_lines().index(currentTarget))
+        if (event.currentTarget === event.target){
+            currentTarget.append(cursor)
+        }else{
+            cursor.insertBefore(target)
         }
     })
 </script>
