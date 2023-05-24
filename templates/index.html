@@ -8,7 +8,6 @@
 </head>
 
 <script src="/static/jquery/jquery.min.js"></script>
-<script src="/static/js/global.js"></script>
 
 <body>
     <div class="main">
@@ -105,7 +104,7 @@
                 </div>
                 <div class="code">
                     <div class="line">
-                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
+                        <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span><span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
                     </div>
                     <div class="line selected">
                         <span>h</span><span>e</span><span>l</span><span>l</span><span>o</span>
@@ -187,6 +186,12 @@
                     </div>
                 </div>
             </div>
+            <div class="scrollbar vertical">
+                <div class="thumb"></div>
+            </div>
+            <div class="scrollbar horizontal">
+                <div class="thumb"></div>
+            </div>
         </div>
         <div class="home-page">
             <div class="dialog">
@@ -198,131 +203,6 @@
     </div>
 </body>
 
-<script>
-    let _ignore_click = false
-    let _menu_clicked = false
-    let _move_window = false
-
-    let close_program = ()=>{
-        $.get("/close")
-    }
-
-    let _maximize_window = ()=>{
-        $("#maximize_btn").css("display", "none")
-        $("#restore-down_btn").css("display", "flex")
-    }
-
-    let _minimize_window = ()=>{
-        $("#maximize_btn").css("display", "flex")
-        $("#restore-down_btn").css("display", "none")
-    }
-
-    let maximize_program = ()=>{
-        $.get("/maximize")
-        _maximize_window()
-    }
-
-    let restore_down_program = ()=>{
-        $.get("/restore-down")
-        _minimize_window()
-    }
-
-    let move_program = ()=>{
-        _move_window = true
-        $.get("/move")
-    }
-
-    let unmove_program = ()=>{
-        _move_window = false
-        $.get("/unmove")
-    }
-
-    let show_program = ()=>{
-        $.get("/show")
-    }
-
-    let minimize_program = ()=>{
-        $.get("/minimize")
-    }
-
-    $("#close_btn").click(()=>{
-        close_program()
-    })
-
-    $("#maximize_btn").click(()=>{
-        maximize_program()
-    })
-
-    $("#restore-down_btn").click(()=>{
-        restore_down_program()
-    })
-
-    $("#minimize_btn").click(()=>{
-        minimize_program()
-    })
-
-    $("body").ready(()=>{
-        // load_home_page()
-        load_editor_page()
-        show_program()
-    })
-
-    let close_topbar_menu = ()=>{
-        $(".menu .item")
-            .removeClass("clicked")
-            .children(".menu-item").css("display", "none");
-        _menu_clicked = false;
-    }
-
-    $(".menu .item").click((event)=>{
-        close_topbar_menu()
-        _ignore_click = true
-        _menu_clicked = true
-        $(event.currentTarget)
-            .addClass("clicked")
-            .children(".menu-item").css("display", "flex")
-    }).hover((event)=>{
-        if(!$(event.currentTarget).hasClass("clicked") && _menu_clicked){
-            close_topbar_menu()
-            $(event.currentTarget).click()
-        }
-    })
-
-    $(document).click(()=>{
-        if(!_ignore_click){
-            close_topbar_menu()
-        }
-        _ignore_click = false
-    }).mouseup((event)=>{
-        if(event.which === 1 && _move_window){
-            unmove_program()
-        }
-    }).mousedown((event)=>{
-        if(event.which === 1 && $(event.target).hasClass("dragable")){
-            move_program()
-        }
-    })
-
-    $("#create_tab").click(()=>{
-        create_tab("untitled.bf")
-        load_editor_page()
-    })
-
-    $(".tab").click((event)=>{
-    })
-
-    $(".editor .window .code .line").mousedown((event)=>{
-        // deselect_all_lines()
-        let currentTarget = $(event.currentTarget)
-        let target = $(event.target)
-        let cursor = $('<div class="cursor"></div>')
-        select_line(_lines().index(currentTarget))
-        if (event.currentTarget === event.target){
-            currentTarget.append(cursor)
-        }else{
-            cursor.insertBefore(target)
-        }
-    })
-</script>
+<script src="/static/js/global.js"></script>
 
 </html>
