@@ -70,36 +70,39 @@ function remove_line(line_index){
 var _visiblity_h_scrollbar = 1
 var _visiblity_v_scrollbar = 1
 
-function update_scrollbars(){
+var _y_ratio = 0
+var _x_ratio = 0
+
+var update_scrollbars = ()=>{
     let editor_panel = $(".editor")
     let window_panel = $(".editor .window")
     let code_panel = $(".editor .window .code")
     let numbers_panel = $(".editor .window .numbers")
-    let vertical_scrollbar = $(".editor .scrollbar.vertical")
     let horizontal_scrollbar = $(".editor .scrollbar.horizontal")
     let vertical_thumb = $(".editor .scrollbar.vertical .thumb")
     let horizontal_thumb = $(".editor .scrollbar.horizontal .thumb")
     let code_line = $(".editor .window .code .line")
 
-    let horizontal_scrollbar_size = horizontal_scrollbar.width() + 10
-    let vertical_scrollbar_size = vertical_scrollbar.height()
     let code_size = code_line.width()
-    let window_size = window_panel.height() + (editor_panel.height() - 22)
+    let window_size = window_panel.height() + editor_panel.height() - 30
+
+    _y_ratio = window_size / editor_panel.height()
+    _x_ratio = code_size / code_panel.width()
 
     horizontal_scrollbar.css("left", numbers_panel.width() + 26)
     horizontal_scrollbar.width(editor_panel.width() - (numbers_panel.width() + 36))
-    horizontal_thumb.width((horizontal_scrollbar_size * code_panel.width() / code_size) - 10)
-    vertical_thumb.height(vertical_scrollbar_size * editor_panel.height() / window_size)
+    horizontal_thumb.width((code_panel.width() / _x_ratio) - 10)
+    vertical_thumb.height(editor_panel.height() / _y_ratio)
+    horizontal_thumb.css("left", (parseInt($(".editor .window .code .line").css("margin-left")) * -1 / _x_ratio))
+    vertical_thumb.css("top", parseInt($(".editor .window").css("margin-top")) * -1 / _y_ratio)
 
-    console.log(horizontal_scrollbar_size, code_size)
-
-    if (horizontal_scrollbar_size >= code_size){
+    if (_x_ratio <= 1){
         horizontal_scrollbar.css("display", "none")
     } else {
         horizontal_scrollbar.css("display", "block")
     }
 
-    if (vertical_scrollbar_size > window_size){
+    if (_y_ratio <= 1){
         vertical_thumb.css("display", "none")
     } else {
         vertical_thumb.css("display", "block")
@@ -183,9 +186,41 @@ $("#minimize_btn").click(()=>{
 })
 
 $("body").ready(()=>{
-    load_home_page()
+    // load_home_page()
+    load_editor_page()
     show_program()
     update_scrollbars()
+
+    $(function() {
+        $(".editor .scrollbar.horizontal .thumb").draggable({
+            axis: "x",
+            containment: ".editor .scrollbar.horizontal",
+            drag: function(event, ui) {
+                var scrollLeft = ui.position.left;
+                $(".editor .window .code .line").css("margin-left", (scrollLeft * -1 * _x_ratio) + "px");
+            },
+            start: function(event, ui) {
+                $(ui).addClass("selected")
+            },
+            stop: function(event, ui) {
+                $(ui).removeClass("selected")
+            }
+        });
+        $(".editor .scrollbar.vertical .thumb").draggable({
+            axis: "y",
+            containment: ".editor .scrollbar.vertical",
+            drag: function(event, ui) {
+                var scrollTop = ui.position.top;
+                $(".editor .window").css("margin-top", (scrollTop * -1 * _y_ratio) + "px");
+            },
+            start: function(event, ui) {
+                $(ui).addClass("selected")
+            },
+            stop: function(event, ui) {
+                $(ui).removeClass("selected")
+            }
+        });
+    });
 })
 
 let close_topbar_menu = ()=>{

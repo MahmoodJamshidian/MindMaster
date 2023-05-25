@@ -386,7 +386,7 @@ img {
 }
 
 .editor .window .code .line span:last-child{
-    padding-right: 30px;
+    margin-right: 50px;
 }
 
 .editor .window .code .line{
@@ -440,6 +440,10 @@ img {
 }
 
 .editor .scrollbar .thumb:hover{
+    opacity: 0.15;
+}
+
+.editor .scrollbar .thumb.ui-draggable-dragging{
     opacity: 0.2;
 }
 
