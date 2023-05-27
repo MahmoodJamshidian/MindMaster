@@ -113,6 +113,35 @@ var update_scrollbars = ()=>{
     }
 }
 
+$(".editor").on('mousewheel DOMMouseScroll', function(event) {
+    var delta = event.originalEvent.wheelDelta || -event.originalEvent.detail;
+    var scrollAmount = (delta > 0 ? 1 : -1) * 50;
+    if (event.shiftKey){
+        var available_space = editorAvailableScrollLeft()
+        var scroll = 0
+        if (scrollAmount > 0){
+            scroll = (available_space[0] + (scrollAmount * -1)) * -1
+            scroll = (scroll < 0) ? scroll : 0
+        }else{
+            scroll = available_space[1] + scrollAmount
+            scroll = (scroll >= 0) ? (editorGetScrollLeft() * -1) + scrollAmount : (editorGetScrollLeft() + available_space[1]) * -1
+        }
+        editorScrollLeft((scroll * -1))
+    }else{
+        var available_space = editorAvailableScrollTop()
+        var scroll = 0
+        if (scrollAmount > 0){
+            scroll = (available_space[0] + (scrollAmount * -1)) * -1
+            scroll = (scroll < 0) ? scroll : 0
+        }else{
+            scroll = available_space[1] + scrollAmount
+            scroll = (scroll >= 0) ? (editorGetScrollTop() * -1) + scrollAmount : (editorGetScrollTop() + available_space[1]) * -1
+        }
+        editorScrollTop((scroll * -1))
+    }
+    update_scrollbars()
+});
+
 var _cursor_status = 0
 
 setInterval(()=>{
