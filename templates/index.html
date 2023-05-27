@@ -203,7 +203,28 @@
         </div>
     </div>
 </body>
-
+<script>
+    $(".editor").on('mousewheel DOMMouseScroll', function(event) {
+        var delta = event.originalEvent.wheelDelta || -event.originalEvent.detail;
+        var scrollAmount = (delta > 0 ? 1 : -1) * 50;
+        var available_space = editorAvailableScrollLeft()
+        if (event.shiftKey){
+            var scroll = 0
+            if (scrollAmount > 0){
+                scroll = (available_space[0] + (scrollAmount * -1)) * -1
+                scroll = (scroll < 0) ? scroll : 0
+            }
+            else{
+                scroll = available_space[1] + scrollAmount
+                scroll = (scroll >= 0) ? (editorGetScrollLeft() * -1) + scrollAmount : (editorGetScrollLeft() + available_space[1]) * -1
+            }
+            editorScrollLeft((scroll * -1))
+        }else{
+            editorScrollTop(editorGetScrollTop() + (scrollAmount * -1))
+        }
+        update_scrollbars()
+    });
+</script>
 <script src="/static/js/global.js"></script>
 
 </html>

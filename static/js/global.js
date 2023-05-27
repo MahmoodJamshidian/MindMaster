@@ -91,10 +91,14 @@ var update_scrollbars = ()=>{
 
     horizontal_scrollbar.css("left", numbers_panel.width() + 26)
     horizontal_scrollbar.width(editor_panel.width() - (numbers_panel.width() + 36))
+
+    let _hc_offset = (parseInt($(".editor .window .code .line").css("margin-left")) * -1)
+    let _vc_offset = (parseInt($(".editor .window").css("margin-top")) * -1)
+
     horizontal_thumb.width((code_panel.width() / _x_ratio) - 10)
     vertical_thumb.height(editor_panel.height() / _y_ratio)
-    horizontal_thumb.css("left", (parseInt($(".editor .window .code .line").css("margin-left")) * -1 / _x_ratio))
-    vertical_thumb.css("top", parseInt($(".editor .window").css("margin-top")) * -1 / _y_ratio)
+    horizontal_thumb.css("left", (_hc_offset / _x_ratio))
+    vertical_thumb.css("top", _vc_offset / _y_ratio)
 
     if (_x_ratio <= 1){
         horizontal_scrollbar.css("display", "none")
@@ -121,7 +125,7 @@ setInterval(()=>{
     }
 }, 500)
 
-setInterval(update_scrollbars, 1)
+$(window).on("resize", update_scrollbars)
 
 let _ignore_click = false
 let _menu_clicked = false
@@ -185,6 +189,49 @@ $("#minimize_btn").click(()=>{
     minimize_program()
 })
 
+function editorAvailableScrollLeft(){
+    let code_panel = $(".editor .window .code")
+    let code_line = $(".editor .window .code .line")
+    let code_size = code_line.width()
+    let _ml = parseInt(code_line.css("margin-left")) * -1
+    return [_ml, (code_size - (_ml + code_panel.width()))]
+}
+
+function editorAvailableScrollTop(){
+    let editor_panel = $(".editor")
+    let window_panel = $(".editor .window")
+    let window_size = window_panel.height() + editor_panel.height() - 30
+    let _mt = parseInt(window_panel.css("margin-top")) * -1
+    return [_mt, (window_size - (_mt + editor_panel.height()))]
+}
+
+function editorScrollLeftRatio(size){
+    editorScrollLeft(size * _x_ratio)
+}
+
+function editorSetScrollTopRatio(size){
+    editorScrollTop(size * _y_ratio)
+}
+
+function editorScrollLeft(size){
+    $(".editor .window .code .line").css("margin-left", (size * -1) + "px");
+    update_scrollbars()
+}
+
+function editorScrollTop(size){
+    editorAvailableScrollTop(size)
+    $(".editor .window").css("margin-top", (size * -1) + "px");
+    update_scrollbars()
+}
+
+function editorGetScrollLeft(){
+    return parseInt($(".editor .window .code .line").css("margin-left")) * -1;
+}
+
+function editorGetScrollTop(){
+    return parseInt($(".editor .window").css("margin-top")) * -1;
+}
+
 $("body").ready(()=>{
     // load_home_page()
     load_editor_page()
@@ -196,8 +243,7 @@ $("body").ready(()=>{
             axis: "x",
             containment: ".editor .scrollbar.horizontal",
             drag: function(event, ui) {
-                var scrollLeft = ui.position.left;
-                $(".editor .window .code .line").css("margin-left", (scrollLeft * -1 * _x_ratio) + "px");
+                editorScrollLeftRatio(ui.position.left)
             },
             start: function(event, ui) {
                 $(ui).addClass("selected")
@@ -210,8 +256,7 @@ $("body").ready(()=>{
             axis: "y",
             containment: ".editor .scrollbar.vertical",
             drag: function(event, ui) {
-                var scrollTop = ui.position.top;
-                $(".editor .window").css("margin-top", (scrollTop * -1 * _y_ratio) + "px");
+                editorSetScrollTopRatio(ui.position.top)
             },
             start: function(event, ui) {
                 $(ui).addClass("selected")
