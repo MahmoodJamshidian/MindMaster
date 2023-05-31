@@ -310,7 +310,6 @@ img {
     background-color: #1E1E1E;
     position: relative;
     z-index: 1;
-    padding-top: 5px;
     /* overflow-y: auto; */
     overflow-y: hidden;
     overflow-x: hidden;
@@ -347,6 +346,7 @@ img {
     display: flex;
     flex-direction: row;
     flex-wrap: nowrap;
+    padding-top: 5px;
 }
 
 .editor .window .numbers{
@@ -420,7 +420,7 @@ img {
 }
   
 .editor .scrollbar.vertical{
-    top: 0;
+    top: 0; /* 5px */
     right: 0;
     width: 10px;
     bottom: 0;

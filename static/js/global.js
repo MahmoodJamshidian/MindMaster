@@ -84,7 +84,7 @@ var update_scrollbars = ()=>{
     let code_line = $(".editor .window .code .line")
 
     let code_size = code_line.width()
-    let window_size = window_panel.height() + editor_panel.height() - 30
+    let window_size = window_panel.height() + editor_panel.height() - 22
 
     _y_ratio = window_size / editor_panel.height()
     _x_ratio = code_size / code_panel.width()
@@ -229,7 +229,7 @@ function editorAvailableScrollLeft(){
 function editorAvailableScrollTop(){
     let editor_panel = $(".editor")
     let window_panel = $(".editor .window")
-    let window_size = window_panel.height() + editor_panel.height() - 30
+    let window_size = window_panel.height() + editor_panel.height() - 22
     let _mt = parseInt(window_panel.css("margin-top")) * -1
     return [_mt, (window_size - (_mt + editor_panel.height()))]
 }
