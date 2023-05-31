@@ -385,10 +385,6 @@ img {
     font-family: CascadiaCode;
 }
 
-.editor .window .code .line span:last-child{
-    margin-right: 50px;
-}
-
 .editor .window .code .line{
     position: relative;
     display: flex;
@@ -398,6 +394,7 @@ img {
     height: 20px;
     border-top: 1px solid #fff0;
     border-bottom: 1px solid #fff0;
+    max-width: fit-content;
 }
 
 .editor .window .code .line.selected{
@@ -420,7 +417,7 @@ img {
 }
   
 .editor .scrollbar.vertical{
-    top: 0; /* 5px */
+    top: 0;
     right: 0;
     width: 10px;
     bottom: 0;
