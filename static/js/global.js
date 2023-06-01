@@ -81,7 +81,7 @@ var update_scrollbars = ()=>{
     let horizontal_scrollbar = $(".editor .scrollbar.horizontal")
     let vertical_thumb = $(".editor .scrollbar.vertical .thumb")
     let horizontal_thumb = $(".editor .scrollbar.horizontal .thumb")
-    let code_line = $(".editor .window .code .line")
+    let code_line = $(".editor .window .code .line span")
 
     let code_size = code_line.width() + 50
     let window_size = window_panel.height() + editor_panel.height() - 22
@@ -221,7 +221,7 @@ $("#minimize_btn").click(()=>{
 function editorAvailableScrollLeft(){
     let code_panel = $(".editor .window .code")
     let code_line = $(".editor .window .code .line")
-    let code_size = code_line.width() + 50
+    let code_size =$(".editor .window .code .line span").width() + 50
     let _ml = parseInt(code_line.css("margin-left")) * -1
     return [_ml, (code_size - (_ml + code_panel.width()))]
 }

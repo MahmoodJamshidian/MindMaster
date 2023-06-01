@@ -310,7 +310,6 @@ img {
     background-color: #1E1E1E;
     position: relative;
     z-index: 1;
-    /* overflow-y: auto; */
     overflow-y: hidden;
     overflow-x: hidden;
     flex: 1 1 auto;
@@ -370,7 +369,6 @@ img {
 .editor .window .code{
     position: relative;
     height: 100%;
-    /* overflow-x: auto; */
     overflow-x: hidden;
     display: flex;
     flex-direction: column;
@@ -394,7 +392,6 @@ img {
     height: 20px;
     border-top: 1px solid #fff0;
     border-bottom: 1px solid #fff0;
-    max-width: fit-content;
 }
 
 .editor .window .code .line.selected{
