@@ -378,7 +378,7 @@ img {
     padding-left: 1px;
 }
 
-.editor .window .code .line *{
+.editor .window .code .line span *{
     font-size: 100%;
     font-family: CascadiaCode;
 }
@@ -394,18 +394,23 @@ img {
     border-bottom: 1px solid #fff0;
 }
 
+.editor .window .code .line>span{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+
 .editor .window .code .line.selected{
     border-top: 1px solid var(--t2);
     border-bottom: 1px solid var(--t2);
 }
 
 .cursor{
-    display: inline;
+    display: inline-block;
     height: 100%;
     width: 2px;
     margin: 0 -1px;
     background-color: var(--t3);
-    display: block;
 }
 
 .editor .scrollbar{

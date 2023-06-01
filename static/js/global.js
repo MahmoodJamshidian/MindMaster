@@ -352,7 +352,7 @@ $(".editor .window .code .line").mousedown((event)=>{
         let cursor = $('<div class="cursor"></div>')
         select_line(_lines().index(currentTarget))
         if (event.currentTarget === event.target){
-            currentTarget.append(cursor)
+            currentTarget.find("span:only-child").append(cursor)
         }else{
             cursor.insertBefore(target)
         }
